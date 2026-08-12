@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FastEndpoints;
@@ -11,7 +11,7 @@ namespace Microsoft.eShopWeb.PublicApi.CatalogTypeEndpoints;
 /// <summary>
 /// List Catalog Types
 /// </summary>
-public class CatalogTypeListEndpoint(IRepository<CatalogType> catalogTypeRepository, AutoMapper.IMapper mapper)
+public class CatalogTypeListEndpoint(IRepository<CatalogType> catalogTypeRepository)
     : EndpointWithoutRequest<ListCatalogTypesResponse>
 {
     public override void Configure()
@@ -20,7 +20,7 @@ public class CatalogTypeListEndpoint(IRepository<CatalogType> catalogTypeReposit
         AllowAnonymous();
         Description(d =>
             d.Produces<ListCatalogTypesResponse>()
-             .WithTags("CatalogTypeEndpoints"));
+            .WithTags("CatalogTypeEndpoints"));
     }
 
     public override async Task<ListCatalogTypesResponse> ExecuteAsync(CancellationToken ct)
@@ -29,7 +29,11 @@ public class CatalogTypeListEndpoint(IRepository<CatalogType> catalogTypeReposit
 
         var items = await catalogTypeRepository.ListAsync(ct);
 
-        response.CatalogTypes.AddRange(items.Select(mapper.Map<CatalogTypeDto>));
+        response.CatalogTypes.AddRange(items.Select(item => new CatalogTypeDto
+        {
+            Id = item.Id,
+            Name = item.Type
+        }));
 
         return response;
     }

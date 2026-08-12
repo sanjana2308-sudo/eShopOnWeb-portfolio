@@ -85,7 +85,7 @@ builder.Services.Configure<ServiceConfig>(config =>
 builder.Services.AddBlazor(builder.Configuration);
 
 builder.Services.AddMetronome();
-builder.AddSeqEndpoint(connectionName: "seq");
+// // builder.AddSeqEndpoint(connectionName: "seq"); // disabled - requires Aspire orchestrator, not needed for docker-compose
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

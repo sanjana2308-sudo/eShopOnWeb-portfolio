@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,8 +13,7 @@ namespace Microsoft.eShopWeb.PublicApi.CatalogItemEndpoints;
 /// <summary>
 /// List Catalog Items (paged)
 /// </summary>
-public class CatalogItemListPagedEndpoint(IRepository<CatalogItem> itemRepository, IUriComposer uriComposer,
-        AutoMapper.IMapper mapper)
+public class CatalogItemListPagedEndpoint(IRepository<CatalogItem> itemRepository, IUriComposer uriComposer)
     : Endpoint<ListPagedCatalogItemRequest, ListPagedCatalogItemResponse>
 {
     public override void Configure()
@@ -23,7 +22,7 @@ public class CatalogItemListPagedEndpoint(IRepository<CatalogItem> itemRepositor
         AllowAnonymous();
         Description(d =>
             d.Produces<ListPagedCatalogItemResponse>()
-             .WithTags("CatalogItemEndpoints"));
+            .WithTags("CatalogItemEndpoints"));
     }
 
     public override async Task<ListPagedCatalogItemResponse> ExecuteAsync(ListPagedCatalogItemRequest request, CancellationToken ct)
@@ -43,7 +42,16 @@ public class CatalogItemListPagedEndpoint(IRepository<CatalogItem> itemRepositor
 
         var items = await itemRepository.ListAsync(pagedSpec, ct);
 
-        response.CatalogItems.AddRange(items.Select(mapper.Map<CatalogItemDto>));
+        response.CatalogItems.AddRange(items.Select(item => new CatalogItemDto
+        {
+            Id = item.Id,
+            CatalogBrandId = item.CatalogBrandId,
+            CatalogTypeId = item.CatalogTypeId,
+            Description = item.Description,
+            Name = item.Name,
+            PictureUri = item.PictureUri,
+            Price = item.Price
+        }));
         foreach (CatalogItemDto item in response.CatalogItems)
         {
             item.PictureUri = uriComposer.ComposePicUri(item.PictureUri);
@@ -51,7 +59,7 @@ public class CatalogItemListPagedEndpoint(IRepository<CatalogItem> itemRepositor
 
         if (request.PageSize > 0)
         {
-            response.PageCount = (int) Math.Ceiling((decimal)totalItems / request.PageSize);
+            response.PageCount = (int)Math.Ceiling((decimal)totalItems / request.PageSize);
         }
         else
         {
