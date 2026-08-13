@@ -1,0 +1,29 @@
+name: OWASP ZAP Security Scan
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  zap-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start the application
+        run: docker compose up -d --build
+
+      - name: Wait for app to be ready
+        run: sleep 60
+
+      - name: Run ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: 'http://localhost:5106'
+          cmd_options: '-a'
+
+      - name: Stop the application
+        if: always()
+        run: docker compose down
