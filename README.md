@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [eShopOnWeb — Application Security Portfolio Project](#eshoponweb--application-security-portfolio-project)
+  - [What I built](#what-i-built)
+    - [New feature: Top Expensive Catalog Items endpoint](#new-feature-top-expensive-catalog-items-endpoint)
+  - [Security work](#security-work)
+    - [1. Static Application Security Testing (SAST) — SonarQube Cloud](#1-static-application-security-testing-sast--sonarqube-cloud)
+    - [2. Software Composition Analysis (SCA) — dependency vulnerability](#2-software-composition-analysis-sca--dependency-vulnerability)
+    - [3. Hardcoded secret remediation](#3-hardcoded-secret-remediation)
+    - [4. Dynamic Application Security Testing (DAST) — OWASP ZAP](#4-dynamic-application-security-testing-dast--owasp-zap)
+  - [Tech stack](#tech-stack)
+  - [Running locally](#running-locally)
+  - [What's next](#whats-next)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # eShopOnWeb — Application Security Portfolio Project
 
 This is a fork of [Microsoft's eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb) (via NimblePros), a reference ASP.NET Core application built with Clean Architecture. I used it as a hands-on project to bridge my .NET development background into Application Security / DevSecOps.
