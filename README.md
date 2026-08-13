@@ -11,7 +11,7 @@ Added a new read endpoint following the project's existing Specification + FastE
 
 - `GET /api/catalog-items-top-expensive` — returns the 5 highest-priced catalog items, sorted descending
 - New files: `TopExpensiveCatalogItemsSpecification.cs`, `GetTopExpensiveCatalogItemsEndpoint.cs`, `GetTopExpensiveCatalogItemsEndpoint.GetTopExpensiveCatalogItemsResponse.cs`
-- Covered by a unit test (Specification logic, xUnit) and an integration test (live endpoint behaviour, MSTest)
+- Covered by a unit test (Specification logic, xUnit — 2/2 passing) and an integration test (live endpoint behaviour, MSTest)
 
 ## Security work
 
