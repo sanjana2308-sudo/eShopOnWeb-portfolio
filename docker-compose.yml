@@ -6,6 +6,9 @@ services:
     build:
       context: .
       dockerfile: src/Web/Dockerfile
+    environment:
+      - ConnectionStrings__CatalogConnection=Server=sqlserver,1433;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.CatalogDb;User Id=sa;Password=${DB_PASSWORD};Trusted_Connection=false;TrustServerCertificate=true;
+      - ConnectionStrings__IdentityConnection=Server=sqlserver,1433;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;User Id=sa;Password=${DB_PASSWORD};Trusted_Connection=false;TrustServerCertificate=true;
     depends_on:
       - "sqlserver"
   eshoppublicapi:
@@ -13,6 +16,9 @@ services:
     build:
       context: .
       dockerfile: src/PublicApi/Dockerfile
+    environment:
+      - ConnectionStrings__CatalogConnection=Server=sqlserver,1433;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.CatalogDb;User Id=sa;Password=${DB_PASSWORD};Trusted_Connection=false;TrustServerCertificate=true;
+      - ConnectionStrings__IdentityConnection=Server=sqlserver,1433;Integrated Security=true;Initial Catalog=Microsoft.eShopOnWeb.Identity;User Id=sa;Password=${DB_PASSWORD};Trusted_Connection=false;TrustServerCertificate=true;
     depends_on:
       - "sqlserver"
   sqlserver:
@@ -20,6 +26,5 @@ services:
     ports:
       - "1433:1433"
     environment:
-      - SA_PASSWORD=@someThingComplicated1234
+      - SA_PASSWORD=${DB_PASSWORD}
       - ACCEPT_EULA=Y
-
