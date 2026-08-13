@@ -5,6 +5,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   zap-scan:
     runs-on: ubuntu-latest
@@ -23,6 +27,7 @@ jobs:
         with:
           target: 'http://localhost:5106'
           cmd_options: '-a'
+          allow_issue_writing: false
 
       - name: Stop the application
         if: always()
